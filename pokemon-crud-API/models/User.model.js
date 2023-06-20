@@ -23,7 +23,8 @@ const userSchema = new Schema(
     team: {
       type: [{
         type: Schema.Types.ObjectId,
-        ref: "Pokemon"
+        ref: "Pokemon",
+        default: []
       }]
     }
   },

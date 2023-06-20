@@ -40,7 +40,7 @@ export const AuthContextWrapper = ({ children }) => {
         setLoading(false);
         setUser(user);
       })
-      .catch(err => {
+      .catch(error => {
         logout();
         setError("You are not authenticated!");
       });

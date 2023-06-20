@@ -1,9 +1,12 @@
 import LoginForm from "../components/LogInForm";
+import { AuthContextWrapper } from "../context/auth.context";
 
-function LoginPage () {
-    return (
-        <LoginForm />
-    )
+function LoginPage() {
+  return (
+    <AuthContextWrapper>
+      <LoginForm />
+    </AuthContextWrapper>
+  );
 }
 
-export default LoginPage
+export default LoginPage;

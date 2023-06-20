@@ -27,7 +27,10 @@ class PokemonService {
         return this.api.get(`/${id}`);
     }
 
-}
+    addPokemon(id){
+            return this.api.post(`/add-pokemon/${id}`)
+        }
+    }
 
 const pokemonService = new PokemonService()
 
