@@ -8,6 +8,7 @@ import Meadow from "../pages/Meadow/Meadow";
 import PrivateRoute from "../components/PrivateRoute";
 import LoginPage from "../pages/LoginPage";
 import SignupPage from "../pages/SignupPage";
+import NewPokemonPage from "../pages/NewPokemonPage";
 
 function App() {
   return (
@@ -37,6 +38,14 @@ function App() {
           element={
             <PrivateRoute>
               <Meadow />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/create-pokemon"
+          element={
+            <PrivateRoute>
+              <NewPokemonPage />
             </PrivateRoute>
           }
         />

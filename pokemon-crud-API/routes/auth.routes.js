@@ -80,4 +80,10 @@ router.get("/verify", isAuthenticated, (req, res, next) => {
   res.status(200).json(req.payload);
 });
 
+router.get("/get-user", isAuthenticated, async (req, res, next) => {
+    const { _id } = req.payload
+    const user = await User.findById(_id)
+    res.json(user)
+})
+
 module.exports = router;

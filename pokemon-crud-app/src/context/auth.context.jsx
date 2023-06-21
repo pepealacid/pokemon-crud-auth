@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import authService from "../../services/auth.service";
 
-const TOKEN_NAME = "authToken";
+export const TOKEN_NAME = "authToken";
 
 export const AuthContext = createContext();
 

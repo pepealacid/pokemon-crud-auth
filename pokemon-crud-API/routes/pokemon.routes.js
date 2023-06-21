@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
 const Pokemon = require("../models/Pokemon.model.js");
-const { getUserByEmail } = require("../controllers/user.controller");
 const { isAuthenticated } = require("../middlewares/verifyToken.middleware.js");
+const User = require("../models/User.model.js");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -16,7 +16,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:_id", async (req, res, next) => {
   try {
     const { _id } = req.params;
-    const pokemon = await pokemon.findById(_id);
+    const pokemon = await Pokemon.findById(_id);
     return res.status(200).json(pokemon);
   } catch (error) {
     next(error);
@@ -39,19 +39,15 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.post("/add-pokemon/:id", isAuthenticated, async (req, res, next) => {
+router.put("/add-pokemon", isAuthenticated, async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const { email } = req.payload;
-    const objectId = mongoose.Types.ObjectId(id);
+    const { id: pokemon_id } = req.body;
+    const { _id: user_id } = req.payload;
 
     try {
-      const user = await getUserByEmail(email);
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      user.team.push(objectId);
-      await user.save();
+      
+     await User.findByIdAndUpdate(user_id, {$push: { team: pokemon_id} })
+     console.log("hemos añadido", pokemon_id, user_id)
       return res.status(200).json({ message: "Pokémon added to team successfully" });
     } catch (error) {
       console.error("Error adding Pokémon to team:", error);
@@ -61,6 +57,20 @@ router.post("/add-pokemon/:id", isAuthenticated, async (req, res, next) => {
     next(error);
   }
 });
+
+router.put("/quit-pokemon", isAuthenticated, async (req, res, next) => {
+  const { id: pokemon_id } = req.body;
+  const { _id: user_id } = req.payload;
+
+  try {
+    await User.findByIdAndUpdate(user_id, { $pull: { team: pokemon_id } });
+    return res.status(200).json({ message: "Pokémon removed from team successfully" });
+  } catch (error) {
+    console.error("Error removing Pokémon from team:", error);
+    return res.status(500).json({ message: "Failed to remove Pokémon from team" });
+  }
+});
+
 
 
 // Delete a pokemon
@@ -79,15 +89,15 @@ router.delete("/:_id", async (req, res, next) => {
 
 // Edit a pokemon
 
-router.put("/:_id", async (req, res, next) => {
-  try {
-    const { _id } = req.params;
-    const editedPokemon = await Pokemon.findByIdAndUpdate(_id, req.body, {
-      new: true,
-    });
-    return res.status(200).json(editedPokemon);
-  } catch (error) {
-    next(error);
-  }
-});
+// router.put("/:_id", async (req, res, next) => {
+//   try {
+//     const { _id } = req.params;
+//     const editedPokemon = await Pokemon.findByIdAndUpdate(_id, req.body, {
+//       new: true,
+//     });
+//     return res.status(200).json(editedPokemon);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 module.exports = router;

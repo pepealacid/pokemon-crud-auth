@@ -20,6 +20,12 @@ class AuthService {
       headers: { Authorization: `Bearer ${token}` }
     });
   }
+
+  getUser(token){
+    return this.api.get("/get-user", {
+      headers: { Authorization: `Bearer ${token}`}
+    })
+  }
 }
 
 const authService = new AuthService();

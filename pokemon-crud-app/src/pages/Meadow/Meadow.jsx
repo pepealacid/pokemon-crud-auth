@@ -49,17 +49,18 @@ const Meadow = () => {
           <Button onClick={handleCreateNewPokemons}>
             Buscar otros Pokemons
           </Button>
+          <Link to={"/profile"}>Mi equipo Pokemon</Link>
         </Flex>
       </div>
       <div className="lower-half">
         {pokemons.map((pokemon) => (
-          <Link key={pokemon._id} onClick={() => handleAddPokemon(pokemon._id)} >
+          <button key={pokemon._id} onClick={() => handleAddPokemon(pokemon._id)} >
             <WildPokemon
               key={pokemon._id}
               imageUrl={pokemon.image}
               name={pokemon.name}
             />
-          </Link>
+          </button>
         ))}
       </div>
     </div>
