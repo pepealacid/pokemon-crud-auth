@@ -71,33 +71,4 @@ router.put("/quit-pokemon", isAuthenticated, async (req, res, next) => {
   }
 });
 
-
-
-// Delete a pokemon
-
-router.delete("/:_id", async (req, res, next) => {
-  try {
-    const { _id } = req.params;
-    await Pokemon.findByIdAndDelete(_id);
-    return res
-      .status(200)
-      .json({ message: `The pokemon with ID: ${_id}has been deleted` });
-  } catch (error) {
-    next(error);
-  }
-});
-
-// Edit a pokemon
-
-// router.put("/:_id", async (req, res, next) => {
-//   try {
-//     const { _id } = req.params;
-//     const editedPokemon = await Pokemon.findByIdAndUpdate(_id, req.body, {
-//       new: true,
-//     });
-//     return res.status(200).json(editedPokemon);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
 module.exports = router;

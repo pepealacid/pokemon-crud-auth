@@ -4,11 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
 
 const Navbar = () => {
-//   const { logout } = useContext(AuthContext);
-
-//   const handleLogout = () => {
-//     logout();
-//   };
+const { logout } = useContext(AuthContext)
 
   return (
     <Box bg="blue.500" px={4} py={2} color="white">
@@ -19,9 +15,9 @@ const Navbar = () => {
         <Spacer />
         <Link to={"/meadow"}>Captura pokemons</Link>
         <Link to={"/profile"}>Ver tus pokemon</Link>
-        {/* <Button colorScheme="blue" ml={4} onClick={handleLogout}>
+        <Button colorScheme="blue" ml={4} onClick={logout}>
           Logout
-        </Button> */}
+        </Button>
       </Flex>
     </Box>
   );
